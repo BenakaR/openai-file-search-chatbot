@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Have a chat</h1>
+        <form id="upload-form" enctype="multipart/form-data">
+            <input type="file" name="file" id="file-input" required>
+            <button type="submit">Upload</button>
+        </form>
+        <form id="chat-form">
+            <h2>Chat with the Bot</h2>
+            <div id="chat-box"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Ask a question...">
+                <button id="submit">Send</button>
+            </div>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

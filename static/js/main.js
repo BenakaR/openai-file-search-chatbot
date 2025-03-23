@@ -1,31 +1,32 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const uploadForm = document.getElementById("upload-form");
-    const fileInput = document.getElementById("file-input");
+    // const uploadForm = document.getElementById("upload-form");
+    // const fileInput = document.getElementById("file-input");
+    
     const chatForm = document.getElementById("chat-form");
     const chatInput = document.getElementById("chat-input");
     const chatOutput = document.getElementById("chat-box");
 
-    uploadForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append("file", fileInput.files[0]);
+    // uploadForm.addEventListener("submit", function(event) {
+    //     event.preventDefault();
+    //     const formData = new FormData();
+    //     formData.append("file", fileInput.files[0]);
 
-        fetch("/upload", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("File uploaded successfully!");
-            } else {
-                alert("File upload failed.");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
-    });
+    //     fetch("/upload", {
+    //         method: "POST",
+    //         body: formData
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         if (data.success) {
+    //             alert("File uploaded successfully!");
+    //         } else {
+    //             alert("File upload failed.");
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error("Error:", error);
+    //     });
+    // });
 
     chatForm.addEventListener("submit", function(event) {
         event.preventDefault();

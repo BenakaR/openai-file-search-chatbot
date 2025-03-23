@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from werkzeug.utils import secure_filename
 import os
-from utils.chat_handler import generate_context_from_files, ask_chatbot
+from utils.chat_handler import generate_context_from_files
+from utils.chat_handler import ask_chatbot, upload_vector_store
 import markdown
 
 md = markdown.Markdown(extensions=["fenced_code"])
@@ -10,33 +11,35 @@ history = {}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024     # 16MB max file size
 
 # Ensure upload directory exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+upload_vector_store()
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file provided'}), 400
+# @app.route('/upload', methods=['POST'])
+# def upload_file():
+#     if 'file' not in request.files:
+#         return jsonify({'error': 'No file provided'}), 400
     
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No file selected'}), 400
+#     file = request.files['file']
+#     if file.filename == '':
+#         return jsonify({'error': 'No file selected'}), 400
 
-    try:
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(file_path)
-        result = generate_context_from_files(file_path)
-        return jsonify({'success': True, 'file_ids': result})
-    except Exception as e:
-        print(e)
-        return jsonify({'error': str(e)}), 500
+#     try:
+#         filename = secure_filename(file.filename)
+#         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+#         file.save(file_path)
+#         result = generate_context_from_files(file_path)
+#         return jsonify({'success': True, 'file_ids': result})
+#     except Exception as e:
+#         print(e)
+#         return jsonify({'error': str(e)}), 500
 
 @app.route('/chat', methods=['POST'])
 def chat():
